@@ -14,4 +14,14 @@ describe("Band", () => {
     });
     expect(heading).toBeInTheDocument();
   });
+
+  test("band component display error information", async () => {
+    const { fakeBands } = await readFakeData();
+    render(<BandComponent band={fakeBands[0]} error="EVERYTHING IS FINE!" />);
+
+    const errorMessage = screen.getByRole("heading", {
+      name: /could not retrieve band data: everything is fine!/i,
+    });
+    expect(errorMessage).toBeInTheDocument();
+  });
 });
