@@ -14,6 +14,11 @@ export const handlers = [
   }),
   rest.get(
     "http://localhost:3000/api/users/:userId/reservations",
-    (req, res, ctx) => res(ctx.json({ userReservations: fakeUserReservations }))
+    (req, res, ctx) => {
+      const { userId } = req.params as { userId: string };
+      const userReservations = Number(userId) === 0 ? [] : fakeUserReservations;
+
+      return res(ctx.json({ userReservations }));
+    }
   ),
 ];
