@@ -6,10 +6,17 @@ import { addBand } from "./lib/features/bands/queries";
 export default defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
+      // eslint-disable-next-line no-param-reassign
+      config.env.REVALIDATION_SECRET = process.env.REVALIDATION_SECRET;
+      // to access within a test function:
+      //  Cypress.env.REVALIDATION_SECRET
+
       on("task", {
         "db:reset": () => resetDB().then(() => null),
         addBand: (newBand) => addBand(newBand).then(() => null),
       });
+
+      return config;
     },
   },
 });
